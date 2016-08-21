@@ -3,12 +3,12 @@ Imports System.Net.WebRequestMethods
 
 Public Class Form2
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        WebBrowser1.Navigate("http://convert2mp3.net/")
+        WebBrowser1.Navigate("http://convert2mp3.net/")  'convert mp4 to mp3
         Timer1.Start()
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Dim url As String = ytlink.Text
-        If url.StartsWith("https://www.youtube.com/watch?v=") Then
+        If url.StartsWith("https://www.youtube.com/watch?v=") Then  'checks if url is from youtube
             convert.Enabled = True
         Else
             convert.Enabled = False
