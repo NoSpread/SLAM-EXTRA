@@ -30,13 +30,15 @@ Partial Class Form2
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.songname = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'ytlink
         '
         Me.ytlink.Location = New System.Drawing.Point(12, 25)
         Me.ytlink.Name = "ytlink"
-        Me.ytlink.Size = New System.Drawing.Size(328, 20)
+        Me.ytlink.Size = New System.Drawing.Size(297, 20)
         Me.ytlink.TabIndex = 1
         '
         'Streamlb
@@ -52,7 +54,7 @@ Partial Class Form2
         '
         Me.convert.Location = New System.Drawing.Point(12, 51)
         Me.convert.Name = "convert"
-        Me.convert.Size = New System.Drawing.Size(328, 23)
+        Me.convert.Size = New System.Drawing.Size(460, 23)
         Me.convert.TabIndex = 3
         Me.convert.Text = "Convert and Download"
         Me.convert.UseVisualStyleBackColor = True
@@ -71,25 +73,43 @@ Partial Class Form2
         Me.ProgressBar1.Location = New System.Drawing.Point(13, 81)
         Me.ProgressBar1.Maximum = 5
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(327, 23)
+        Me.ProgressBar1.Size = New System.Drawing.Size(459, 23)
         Me.ProgressBar1.TabIndex = 5
         '
         'Timer1
         '
         '
+        'songname
+        '
+        Me.songname.Location = New System.Drawing.Point(315, 25)
+        Me.songname.Name = "songname"
+        Me.songname.Size = New System.Drawing.Size(157, 20)
+        Me.songname.TabIndex = 6
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(315, 8)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(63, 13)
+        Me.Label1.TabIndex = 7
+        Me.Label1.Text = "Song Name"
+        '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(353, 111)
+        Me.ClientSize = New System.Drawing.Size(484, 111)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.songname)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.convert)
         Me.Controls.Add(Me.Streamlb)
         Me.Controls.Add(Me.ytlink)
         Me.Controls.Add(Me.WebBrowser1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximumSize = New System.Drawing.Size(369, 150)
-        Me.MinimumSize = New System.Drawing.Size(369, 150)
+        Me.MaximumSize = New System.Drawing.Size(500, 150)
+        Me.MinimumSize = New System.Drawing.Size(500, 150)
         Me.Name = "Form2"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "YouTube Downloader"
@@ -103,4 +123,6 @@ Partial Class Form2
     Friend WithEvents WebBrowser1 As WebBrowser
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents songname As TextBox
+    Friend WithEvents Label1 As Label
 End Class
