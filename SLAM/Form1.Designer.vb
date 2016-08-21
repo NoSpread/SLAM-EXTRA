@@ -258,7 +258,7 @@ Partial Class Form1
         Me.StreamB.Name = "StreamB"
         Me.StreamB.Size = New System.Drawing.Size(75, 23)
         Me.StreamB.TabIndex = 10
-        Me.StreamB.Text = "YouTube"
+        Me.StreamB.Text = "Download"
         Me.StreamB.UseVisualStyleBackColor = True
         '
         'Form1

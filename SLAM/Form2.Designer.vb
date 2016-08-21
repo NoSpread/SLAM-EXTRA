@@ -46,9 +46,9 @@ Partial Class Form2
         Me.Streamlb.AutoSize = True
         Me.Streamlb.Location = New System.Drawing.Point(9, 9)
         Me.Streamlb.Name = "Streamlb"
-        Me.Streamlb.Size = New System.Drawing.Size(70, 13)
+        Me.Streamlb.Size = New System.Drawing.Size(69, 13)
         Me.Streamlb.TabIndex = 2
-        Me.Streamlb.Text = "Youtube Link"
+        Me.Streamlb.Text = "Link to Video"
         '
         'convert
         '
@@ -112,7 +112,7 @@ Partial Class Form2
         Me.MinimumSize = New System.Drawing.Size(500, 150)
         Me.Name = "Form2"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "YouTube Downloader"
+        Me.Text = "Music Downloader"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

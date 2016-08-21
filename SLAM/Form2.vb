@@ -12,7 +12,7 @@ Public Class Form2
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Dim url As String = ytlink.Text
-        If url.StartsWith("https://www.youtube.com/watch?v=") Then  'checks if url is from youtube
+        If url.StartsWith("https://www.youtube.com/watch?v=") Or url.StartsWith("http://www.dailymotion.com/video/") Or url.StartsWith("http://www.vevo.com/") Or url.StartsWith("http://www.clipfish.de/") Then  'checks if url is from youtube
             convert.Enabled = True
         Else
             convert.Enabled = False
