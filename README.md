@@ -16,6 +16,7 @@ Current features:
 - Create binds to load specific songs.
 - Change track volume on the go.
 - Trim tracks on the go.
+- Download music form youtube directly
 
 
 ![1](http://i.imgur.com/aQ0sWeJ.png)
