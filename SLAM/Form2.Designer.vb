@@ -22,12 +22,14 @@ Partial Class Form2
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
         Me.ytlink = New System.Windows.Forms.TextBox()
         Me.Streamlb = New System.Windows.Forms.Label()
         Me.convert = New System.Windows.Forms.Button()
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'ytlink
@@ -72,6 +74,9 @@ Partial Class Form2
         Me.ProgressBar1.Size = New System.Drawing.Size(327, 23)
         Me.ProgressBar1.TabIndex = 5
         '
+        'Timer1
+        '
+        '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -97,4 +102,5 @@ Partial Class Form2
     Friend WithEvents convert As Button
     Friend WithEvents WebBrowser1 As WebBrowser
     Friend WithEvents ProgressBar1 As ProgressBar
+    Friend WithEvents Timer1 As Timer
 End Class

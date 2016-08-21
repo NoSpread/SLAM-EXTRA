@@ -4,8 +4,16 @@ Imports System.Net.WebRequestMethods
 Public Class Form2
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         WebBrowser1.Navigate("http://convert2mp3.net/")
+        Timer1.Start()
     End Sub
-
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Dim url As String = ytlink.Text
+        If url.StartsWith("https://www.youtube.com/watch?v=") Then
+            convert.Enabled = True
+        Else
+            convert.Enabled = False
+        End If
+    End Sub
     Private Sub convert_Click(sender As Object, e As EventArgs) Handles convert.Click
         Dim allelements As HtmlElementCollection = WebBrowser1.Document.All
         Dim text As String = WebBrowser1.DocumentText
@@ -41,13 +49,17 @@ Public Class Form2
             Application.DoEvents()
         Next
         ProgressBar1.PerformStep()
+
         Dim allelements3 As HtmlElementCollection = WebBrowser1.Document.All
         For Each webpageelement As HtmlElement In allelements3
             If webpageelement.InnerText = " Download starten" Then
                 webpageelement.InvokeMember("click")
             End If
         Next
+
         ProgressBar1.Value = 0
-        Me.Close()
+        Timer1.Stop()
     End Sub
+
+
 End Class
