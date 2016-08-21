@@ -4,10 +4,6 @@ Imports System.Net.WebRequestMethods
 Public Class Form2
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         WebBrowser1.Navigate("http://convert2mp3.net/")
-        While (WebBrowser1.ReadyState <> WebBrowserReadyState.Complete)
-            convert.Enabled = False
-        End While
-
     End Sub
 
     Private Sub convert_Click(sender As Object, e As EventArgs) Handles convert.Click
@@ -52,6 +48,6 @@ Public Class Form2
             End If
         Next
         ProgressBar1.Value = 0
-
+        Me.Close()
     End Sub
 End Class
