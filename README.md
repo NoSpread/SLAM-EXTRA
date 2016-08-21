@@ -17,8 +17,3 @@ Current features:
 - Change track volume on the go.
 - Trim tracks on the go.
 - Download music form youtube directly
-
-
-![1](http://i.imgur.com/aQ0sWeJ.png)
-![2](http://i.imgur.com/vfWozNU.png)
-![3](http://i.imgur.com/HB2qAEh.png)
