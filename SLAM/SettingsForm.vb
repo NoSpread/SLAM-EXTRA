@@ -12,7 +12,7 @@
     End Sub
 
     Private Sub UpdateCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles UpdateCheckBox.CheckedChanged
-        MsgBox("Disabled")
+        UpdateCheckBox.Enabled = False
     End Sub
 
     Private Sub HintCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles HintCheckBox.CheckedChanged
@@ -48,4 +48,5 @@
         My.Settings.HoldToPlay = HoldToPlay.Checked
         My.Settings.Save()
     End Sub
+
 End Class

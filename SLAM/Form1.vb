@@ -7,7 +7,7 @@ Imports SLAM.XmlSerialization
 Imports SLAM.SourceGame
 Imports System.Management
 Imports System.Net.Http
-Imports SpotifyAPI
+
 
 Public Class Form1
 
@@ -18,9 +18,9 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RefreshPlayKey()
 
-        If My.Settings.UpdateCheck Then
-            CheckForUpdate()
-        End If
+        ''If My.Settings.UpdateCheck Then
+        ''CheckForUpdate()
+        ''End If
 
         Dim csgo As New SourceGame
         csgo.name = "Counter-Strike: Global Offensive"
@@ -867,32 +867,32 @@ Public Class Form1
         End If
     End Sub
 
-    Private Async Sub CheckForUpdate()
-        Dim UpdateText As String
+    ''Private Async Sub CheckForUpdate()
+    ''Dim UpdateText As String
 
-        Dim NeatVersion As String = My.Application.Info.Version.ToString.Remove(My.Application.Info.Version.ToString.LastIndexOf("."))
+    ''Dim NeatVersion As String = My.Application.Info.Version.ToString.Remove(My.Application.Info.Version.ToString.LastIndexOf("."))
 
-        Try
+    ''Try
 
-            Using client As New HttpClient
-                Dim UpdateTextTask As Task(Of String) = client.GetStringAsync("http://slam.flankers.net/updates.php?version=" & NeatVersion)
-                UpdateText = Await UpdateTextTask
-            End Using
+    ''Using client As New HttpClient
+    ''Dim UpdateTextTask As Task(Of String) = client.GetStringAsync("http://slam.flankers.net/updates.php?version=" & NeatVersion)
+    ''          UpdateText = Await UpdateTextTask
+    ''End Using
 
-        Catch ex As Exception
-            Return
-        End Try
+    ''Catch ex As Exception
+    ''Return
+    ''End Try
 
-        Dim NewVersion As New Version("0.0.0.0") 'generic
-        Dim UpdateURL As String = UpdateText.Split()(1)
-        If Version.TryParse(UpdateText.Split()(0), NewVersion) Then
-            If My.Application.Info.Version.CompareTo(NewVersion) < 0 Then
-                If MessageBox.Show(String.Format("An update ({0}) is available! Click ""OK"" to be taken to the download page.", NewVersion.ToString), "SLAM Update", MessageBoxButtons.OKCancel) = Windows.Forms.DialogResult.OK Then
-                    Process.Start(UpdateURL)
-                End If
-            End If
-        End If
-    End Sub
+    ''Dim NewVersion As New Version("0.0.0.0") 'generic
+    ''Dim UpdateURL As String = UpdateText.Split()(1)
+    ''If Version.TryParse(UpdateText.Split()(0), NewVersion) Then
+    ''If My.Application.Info.Version.CompareTo(NewVersion) < 0 Then
+    ''If MessageBox.Show(String.Format("An update ({0}) is available! Click ""OK"" to be taken to the download page.", NewVersion.ToString), "SLAM Update", MessageBoxButtons.OKCancel) = Windows.Forms.DialogResult.OK Then
+    ''              Process.Start(UpdateURL)
+    ''End If
+    ''End If
+    ''End If
+    ''End Sub
 
     Private Sub PlayKeyButton_Click(sender As Object, e As EventArgs) Handles PlayKeyButton.Click
         Dim SelectKeyDialog As New SelectKey
