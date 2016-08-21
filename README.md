@@ -16,4 +16,4 @@ Current features:
 - Create binds to load specific songs.
 - Change track volume on the go.
 - Trim tracks on the go.
-- Download music form youtube directly
+- Download music directly form YouTube, Dailymotion, Vevo and Clipfish
