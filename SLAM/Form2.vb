@@ -80,5 +80,7 @@ Public Class Form2
         ProgressBar1.Value = 0
         Timer1.Stop()
         Me.Close()
+
+
     End Sub
 End Class
