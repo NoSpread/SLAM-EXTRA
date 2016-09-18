@@ -20,7 +20,6 @@ Public Class Form2
     End Sub
     Private Sub convert_Click(sender As Object, e As EventArgs) Handles convert.Click
         Dim allelements As HtmlElementCollection = WebBrowser1.Document.All
-        Dim text As String = WebBrowser1.DocumentText
         ProgressBar1.Minimum = 0
         ProgressBar1.Maximum = 5
         ProgressBar1.Step = 1

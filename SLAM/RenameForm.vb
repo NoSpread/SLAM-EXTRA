@@ -1,6 +1,6 @@
 ﻿Public Class RenameForm
 
-    Public filename As String
+    Public Filename As String
 
     Private Sub DoneButton_Click(sender As Object, e As EventArgs) Handles DoneButton.Click
         If String.IsNullOrWhiteSpace(NameBox.Text) Then

@@ -1,11 +1,11 @@
 ﻿Public Class SelectKey
 
     Public ChosenKey As String
-    Dim WholeList As New List(Of String)
+    Dim _wholeList As New List(Of String)
 
     Private Sub SelectKey_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         For Each item In BindKeyBox.Items
-            WholeList.Add(item.ToString)
+            _wholeList.Add(item.ToString)
         Next
     End Sub
 
@@ -14,13 +14,13 @@
 
         If String.IsNullOrEmpty(BindKeyBox.Text) Then
             BindKeyBox.Items.Clear()
-            BindKeyBox.Items.AddRange(WholeList.ToArray)
+            BindKeyBox.Items.AddRange(_wholeList.ToArray)
         Else
 
             BindKeyBox.Text = BindKeyBox.Text.ToUpper
             BindKeyBox.SelectionStart = BindKeyBox.Text.Length
 
-            If WholeList.Contains(BindKeyBox.Text) Then
+            If _wholeList.Contains(BindKeyBox.Text) Then
                 BindKeyBox.ForeColor = Color.Green
             Else
                 BindKeyBox.ForeColor = Color.Red
@@ -29,7 +29,7 @@
     End Sub
 
     Private Sub SelectButton_Click(sender As Object, e As EventArgs) Handles SelectButton.Click
-        If WholeList.Contains(BindKeyBox.Text) Then
+        If _wholeList.Contains(BindKeyBox.Text) Then
             ChosenKey = BindKeyBox.Text
             DialogResult = Windows.Forms.DialogResult.OK
 

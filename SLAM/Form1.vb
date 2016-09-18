@@ -1,4 +1,4 @@
-﻿Imports NAudio 'Modified Version which does not write "extraSize"
+﻿'Modified Version which does not write "extraSize"
 Imports NAudio.Wave
 Imports System.IO
 Imports System.Text.RegularExpressions
@@ -6,14 +6,13 @@ Imports System.Threading
 Imports SLAM.XmlSerialization
 Imports SLAM.SourceGame
 Imports System.Management
-Imports System.Net.Http
 
 
 Public Class Form1
 
-    Dim Games As New List(Of SourceGame)
-    Dim running As Boolean = False
-    Dim ClosePending As Boolean = False
+    ReadOnly _games As New List(Of SourceGame)
+    Dim _running As Boolean = False
+    Dim _closePending As Boolean = False
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RefreshPlayKey()
@@ -23,68 +22,68 @@ Public Class Form1
         ''End If
 
         Dim csgo As New SourceGame
-        csgo.name = "Counter-Strike: Global Offensive"
-        csgo.id = 730
-        csgo.directory = "common\Counter-Strike Global Offensive\"
+        csgo.Name = "Counter-Strike: Global Offensive"
+        csgo.Id = 730
+        csgo.Directory = "common\Counter-Strike Global Offensive\"
         csgo.ToCfg = "csgo\cfg\"
-        csgo.libraryname = "csgo\"
-        csgo.exename = "csgo"
-        csgo.samplerate = 22050
-        csgo.blacklist.AddRange({"drop", "buy", "go", "fallback", "sticktog", "holdpos", "followme", "coverme", "regroup", "roger", "negative", "cheer", "compliment", "thanks", "enemydown", "reportingin", "enemyspot", "takepoint", "sectorclear", "inposition", "takingfire", "report", "getout"})
+        csgo.Libraryname = "csgo\"
+        csgo.Exename = "csgo"
+        csgo.Samplerate = 22050
+        csgo.Blacklist.AddRange({"drop", "buy", "go", "fallback", "sticktog", "holdpos", "followme", "coverme", "regroup", "roger", "negative", "cheer", "compliment", "thanks", "enemydown", "reportingin", "enemyspot", "takepoint", "sectorclear", "inposition", "takingfire", "report", "getout"})
         csgo.VoiceFadeOut = False
-        Games.Add(csgo)
+        _games.Add(csgo)
 
         Dim css As New SourceGame
-        css.name = "Counter-Strike: Source"
-        css.directory = "common\Counter-Strike Source\"
+        css.Name = "Counter-Strike: Source"
+        css.Directory = "common\Counter-Strike Source\"
         css.ToCfg = "cstrike\cfg\"
-        css.libraryname = "css\"
-        Games.Add(css)
+        css.Libraryname = "css\"
+        _games.Add(css)
 
         Dim tf2 As New SourceGame
-        tf2.name = "Team Fortress 2"
-        tf2.directory = "common\Team Fortress 2\"
+        tf2.Name = "Team Fortress 2"
+        tf2.Directory = "common\Team Fortress 2\"
         tf2.ToCfg = "tf\cfg\"
-        tf2.libraryname = "tf2\"
-        Games.Add(tf2)
+        tf2.Libraryname = "tf2\"
+        _games.Add(tf2)
 
         Dim gmod As New SourceGame
-        gmod.name = "Garry's Mod"
-        gmod.directory = "common\GarrysMod\"
+        gmod.Name = "Garry's Mod"
+        gmod.Directory = "common\GarrysMod\"
         gmod.ToCfg = "garrysmod\cfg\"
-        gmod.libraryname = "gmod\"
-        Games.Add(gmod)
+        gmod.Libraryname = "gmod\"
+        _games.Add(gmod)
 
-        Dim hl2dm As New SourceGame
-        hl2dm.name = "Half-Life 2 Deathmatch"
-        hl2dm.directory = "common\half-life 2 deathmatch\"
-        hl2dm.ToCfg = "hl2mp\cfg\"
-        hl2dm.libraryname = "hl2dm\"
-        Games.Add(hl2dm)
+        Dim hl2Dm As New SourceGame
+        hl2Dm.Name = "Half-Life 2 Deathmatch"
+        hl2Dm.Directory = "common\half-life 2 deathmatch\"
+        hl2Dm.ToCfg = "hl2mp\cfg\"
+        hl2Dm.Libraryname = "hl2dm\"
+        _games.Add(hl2Dm)
 
-        Dim l4d As New SourceGame
-        l4d.name = "Left 4 Dead"
-        l4d.directory = "common\Left 4 Dead\"
-        l4d.ToCfg = "left4dead\cfg\"
-        l4d.libraryname = "l4d\"
-        l4d.exename = "left4dead"
-        Games.Add(l4d)
+        Dim l4D As New SourceGame
+        l4D.Name = "Left 4 Dead"
+        l4D.Directory = "common\Left 4 Dead\"
+        l4D.ToCfg = "left4dead\cfg\"
+        l4D.Libraryname = "l4d\"
+        l4D.Exename = "left4dead"
+        _games.Add(l4D)
 
-        Dim l4d2 As New SourceGame
-        l4d2.name = "Left 4 Dead 2"
-        l4d2.directory = "common\Left 4 Dead 2\"
-        l4d2.ToCfg = "left4dead2\cfg\"
-        l4d2.libraryname = "l4d2\"
-        l4d2.exename = "left4dead2"
-        l4d2.VoiceFadeOut = False
-        Games.Add(l4d2)
+        Dim l4D2 As New SourceGame
+        l4D2.Name = "Left 4 Dead 2"
+        l4D2.Directory = "common\Left 4 Dead 2\"
+        l4D2.ToCfg = "left4dead2\cfg\"
+        l4D2.Libraryname = "l4d2\"
+        l4D2.Exename = "left4dead2"
+        l4D2.VoiceFadeOut = False
+        _games.Add(l4D2)
 
         Dim dods As New SourceGame
-        dods.name = "Day of Defeat Source"
-        dods.directory = "common\day of defeat source\"
+        dods.Name = "Day of Defeat Source"
+        dods.Directory = "common\day of defeat source\"
         dods.ToCfg = "dod\cfg\"
-        dods.libraryname = "dods\"
-        Games.Add(dods)
+        dods.Libraryname = "dods\"
+        _games.Add(dods)
 
         'NEEDS EXENAME!!!
         'Dim goldeye As New SourceGame
@@ -95,15 +94,15 @@ Public Class Form1
         'Games.Add(goldeye)
 
         Dim insurg As New SourceGame
-        insurg.name = "Insurgency"
-        insurg.directory = "common\insurgency2\"
+        insurg.Name = "Insurgency"
+        insurg.Directory = "common\insurgency2\"
         insurg.ToCfg = "insurgency\cfg\"
-        insurg.libraryname = "insurgen\"
-        insurg.exename = "insurgency"
-        Games.Add(insurg)
+        insurg.Libraryname = "insurgen\"
+        insurg.Exename = "insurgency"
+        _games.Add(insurg)
 
-        For Each Game In Games
-            GameSelector.Items.Add(Game.name)
+        For Each Game In _games
+            GameSelector.Items.Add(Game.Name)
         Next
 
         If GameSelector.Items.Contains(My.Settings.LastGame) Then
@@ -120,11 +119,11 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub WaveCreator(File As String, outputFile As String, Game As SourceGame)
-        Dim reader As New MediaFoundationReader(File)
+    Private Sub WaveCreator(file As String, outputFile As String, game As SourceGame)
+        Dim reader As New MediaFoundationReader(file)
 
 
-        Dim outFormat = New WaveFormat(Game.samplerate, Game.bits, Game.channels)
+        Dim outFormat = New WaveFormat(game.Samplerate, game.Bits, game.Channels)
 
         Dim resampler = New MediaFoundationResampler(reader, outFormat)
 
@@ -145,10 +144,10 @@ Public Class Form1
     Private Sub ImportButton_Click(sender As Object, e As EventArgs) Handles ImportButton.Click
         If File.Exists("NAudio.dll") Then
             DisableInterface()
-            If ImportDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            If ImportDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
                 ProgressBar1.Maximum = ImportDialog.FileNames.Count
-                Dim WorkerPassthrough() As Object = {GetCurrentGame(), ImportDialog.FileNames}
-                WavWorker.RunWorkerAsync(WorkerPassthrough)
+                Dim workerPassthrough() As Object = {GetCurrentGame(), ImportDialog.FileNames}
+                WavWorker.RunWorkerAsync(workerPassthrough)
             Else
                 EnableInterface()
             End If
@@ -159,24 +158,24 @@ Public Class Form1
     End Sub
 
     Private Sub WavWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles WavWorker.DoWork
-        Dim Game As SourceGame = e.Argument(0)
-        Dim Files() As String = e.Argument(1)
-        Dim FailedFiles As New List(Of String)
+        Dim game As SourceGame = e.Argument(0)
+        Dim files() As String = e.Argument(1)
+        Dim failedFiles As New List(Of String)
 
-        For Each File In Files
+        For Each File In files
 
             Try
-                Dim OutFile As String = Path.Combine(Game.libraryname, Path.GetFileNameWithoutExtension(File) & ".wav")
-                WaveCreator(File, OutFile, Game)
+                Dim outFile As String = Path.Combine(game.Libraryname, Path.GetFileNameWithoutExtension(File) & ".wav")
+                WaveCreator(File, outFile, game)
 
             Catch ex As Exception
                 LogError(ex)
-                FailedFiles.Add(File)
+                failedFiles.Add(File)
             End Try
             WavWorker.ReportProgress(0)
         Next
 
-        e.Result = FailedFiles
+        e.Result = failedFiles
 
     End Sub
 
@@ -188,68 +187,70 @@ Public Class Form1
 
     Private Sub WavWorker_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles WavWorker.RunWorkerCompleted
         ProgressBar1.Value = 0
-        Dim MsgBoxText As String = "Conversion complete!"
-        Dim FailedFiles As New List(Of String)
+        Dim msgBoxText As String = "Conversion complete!"
+        Dim failedFiles As New List(Of String)
 
         For Each FilePath In e.Result
-            FailedFiles.Add(Path.GetFileName(FilePath))
+            failedFiles.Add(Path.GetFileName(FilePath))
         Next
 
-        If FailedFiles.Count > 0 Then
-            MsgBoxText = MsgBoxText & " However, the following files failed to convert: " & String.Join(", ", FailedFiles)
+        If failedFiles.Count > 0 Then
+            msgBoxText = msgBoxText & " However, the following files failed to convert: " & String.Join(", ", failedFiles)
         End If
 
         ReloadTracks(GetCurrentGame)
         RefreshTrackList()
-        MsgBox(MsgBoxText)
+        MsgBox(msgBoxText)
         EnableInterface()
     End Sub
 
     Private Function GetCurrentGame() As SourceGame
-        For Each Game In Games
-            If Game.name = GameSelector.SelectedItem.ToString Then
+        For Each Game In _games
+            If Game.Name = GameSelector.SelectedItem.ToString Then
                 Return Game
             End If
         Next
         Return Nothing 'Null if nothing found
     End Function
 
-    Private Sub ReloadTracks(Game As SourceGame)
-        If System.IO.Directory.Exists(Game.libraryname) Then
+    Private Sub ReloadTracks(game As SourceGame)
+        If IO.Directory.Exists(game.Libraryname) Then
 
-            Game.tracks.Clear()
-            For Each File In System.IO.Directory.GetFiles(Game.libraryname)
+            game.Tracks.Clear()
+            For Each File In IO.Directory.GetFiles(game.Libraryname)
 
-                If Game.FileExtension = Path.GetExtension(File) Then
-                    Dim track As New track
+                If game.FileExtension = Path.GetExtension(File) Then
+                    Dim track As New Track
                     track.name = Path.GetFileNameWithoutExtension(File)
-                    Game.tracks.Add(track)
+                    game.Tracks.Add(track)
                 End If
 
             Next
 
-            CreateTags(Game)
-            LoadTrackKeys(Game)
-            SaveTrackKeys(Game) 'To prune hotkeys from non-existing tracks
+            CreateTags(game)
+            LoadTrackKeys(game)
+            SaveTrackKeys(game) 'To prune hotkeys from non-existing tracks
 
         Else
-            System.IO.Directory.CreateDirectory(Game.libraryname)
+            IO.Directory.CreateDirectory(game.Libraryname)
         End If
     End Sub
 
     Private Sub RefreshTrackList()
         TrackList.Items.Clear()
 
-        Dim Game As SourceGame = GetCurrentGame()
+        Dim game As SourceGame = GetCurrentGame()
 
-        For Each Track In Game.tracks
+        For Each Track In game.Tracks
 
-            Dim trimmed As String = ""
-            If Track.endpos > 0 Then
+            ' ReSharper disable once LocalVariableHidesMember
+            Dim trimmed As String
+            trimmed = ""
+            If Track.Endpos > 0 Then
                 trimmed = "Yes"
             End If
 
-            TrackList.Items.Add(New ListViewItem({"False", Track.name, Track.hotkey, Track.volume & "%", trimmed, """" & String.Join(""", """, Track.tags) & """"}))
+            TrackList.Items.Add(New ListViewItem({"False", Track.name, Track.Hotkey, Track.Volume & "%", trimmed, """" & String.Join(""", """, Track.Tags) & """"}))
         Next
 
 
@@ -262,7 +263,7 @@ Public Class Form1
     End Sub
 
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        If running Then
+        If _running Then
             StopPoll()
         Else
             StartPoll()
@@ -276,7 +277,7 @@ Public Class Form1
     End Sub
 
     Private Sub StartPoll()
-        running = True
+        _running = True
         StartButton.Text = "Stop"
         DisableInterface()
         StartButton.Enabled = True
@@ -286,130 +287,130 @@ Public Class Form1
     End Sub
 
     Private Sub StopPoll()
-        running = False
+        _running = False
         StartButton.Text = "Start"
         EnableInterface()
         PollRelayWorker.CancelAsync()
     End Sub
 
-    Private Sub CreateCfgFiles(Game As SourceGame, SteamappsPath As String)
-        Dim GameDir As String = Path.Combine(SteamappsPath, Game.directory)
-        Dim GameCfgFolder As String = Path.Combine(GameDir, Game.ToCfg)
+    Private Sub CreateCfgFiles(game As SourceGame, steamappsPath As String)
+        Dim gameDir As String = Path.Combine(steamappsPath, game.Directory)
+        Dim gameCfgFolder As String = Path.Combine(gameDir, game.ToCfg)
 
         'slam.cfg
-        Using slam_cfg As StreamWriter = New StreamWriter(GameCfgFolder & "slam.cfg")
-            slam_cfg.WriteLine("alias slam_listtracks ""exec slam_tracklist.cfg""")
-            slam_cfg.WriteLine("alias list slam_listtracks")
-            slam_cfg.WriteLine("alias tracks slam_listtracks")
-            slam_cfg.WriteLine("alias la slam_listtracks")
-            slam_cfg.WriteLine("alias slam_play slam_play_on")
-            slam_cfg.WriteLine("alias slam_play_on ""alias slam_play slam_play_off; voice_inputfromfile 1; voice_loopback 1; +voicerecord""")
-            slam_cfg.WriteLine("alias slam_play_off ""-voicerecord; voice_inputfromfile 0; voice_loopback 0; alias slam_play slam_play_on""")
-            slam_cfg.WriteLine("alias slam_updatecfg ""host_writeconfig slam_relay""")
+        Using slamCfg As StreamWriter = New StreamWriter(gameCfgFolder & "slam.cfg")
+            slamCfg.WriteLine("alias slam_listtracks ""exec slam_tracklist.cfg""")
+            slamCfg.WriteLine("alias list slam_listtracks")
+            slamCfg.WriteLine("alias tracks slam_listtracks")
+            slamCfg.WriteLine("alias la slam_listtracks")
+            slamCfg.WriteLine("alias slam_play slam_play_on")
+            slamCfg.WriteLine("alias slam_play_on ""alias slam_play slam_play_off; voice_inputfromfile 1; voice_loopback 1; +voicerecord""")
+            slamCfg.WriteLine("alias slam_play_off ""-voicerecord; voice_inputfromfile 0; voice_loopback 0; alias slam_play slam_play_on""")
+            slamCfg.WriteLine("alias slam_updatecfg ""host_writeconfig slam_relay""")
             If My.Settings.HoldToPlay Then
-                slam_cfg.WriteLine("alias +slam_hold_play slam_play_on")
-                slam_cfg.WriteLine("alias -slam_hold_play slam_play_off")
-                slam_cfg.WriteLine("bind {0} +slam_hold_play", My.Settings.PlayKey)
+                slamCfg.WriteLine("alias +slam_hold_play slam_play_on")
+                slamCfg.WriteLine("alias -slam_hold_play slam_play_off")
+                slamCfg.WriteLine("bind {0} +slam_hold_play", My.Settings.PlayKey)
             Else
-                slam_cfg.WriteLine("bind {0} slam_play", My.Settings.PlayKey)
+                slamCfg.WriteLine("bind {0} slam_play", My.Settings.PlayKey)
             End If
-            slam_cfg.WriteLine("alias slam_curtrack ""exec slam_curtrack.cfg""")
-            slam_cfg.WriteLine("alias slam_saycurtrack ""exec slam_saycurtrack.cfg""")
-            slam_cfg.WriteLine("alias slam_sayteamcurtrack ""exec slam_sayteamcurtrack.cfg""")
+            slamCfg.WriteLine("alias slam_curtrack ""exec slam_curtrack.cfg""")
+            slamCfg.WriteLine("alias slam_saycurtrack ""exec slam_saycurtrack.cfg""")
+            slamCfg.WriteLine("alias slam_sayteamcurtrack ""exec slam_sayteamcurtrack.cfg""")
 
-            For Each Track In Game.tracks
-                Dim index As String = Game.tracks.IndexOf(Track)
-                slam_cfg.WriteLine("alias {0} ""bind {1} {0}; slam_updatecfg; echo Loaded: {2}""", index + 1, My.Settings.RelayKey, Track.name)
+            For Each Track In game.Tracks
+                Dim index As String = game.Tracks.IndexOf(Track)
+                slamCfg.WriteLine("alias {0} ""bind {1} {0}; slam_updatecfg; echo Loaded: {2}""", index + 1, My.Settings.RelayKey, Track.name)
 
-                For Each TrackTag In Track.tags
-                    slam_cfg.WriteLine("alias {0} ""bind {1} {2}; slam_updatecfg; echo Loaded: {3}""", TrackTag, My.Settings.RelayKey, index + 1, Track.name)
+                For Each TrackTag In Track.Tags
+                    slamCfg.WriteLine("alias {0} ""bind {1} {2}; slam_updatecfg; echo Loaded: {3}""", TrackTag, My.Settings.RelayKey, index + 1, Track.name)
                 Next
 
-                If Not String.IsNullOrEmpty(Track.hotkey) Then
-                    slam_cfg.WriteLine("bind {0} ""bind {1} {2}; slam_updatecfg; echo Loaded: {3}""", Track.hotkey, My.Settings.RelayKey, index + 1, Track.name)
+                If Not String.IsNullOrEmpty(Track.Hotkey) Then
+                    slamCfg.WriteLine("bind {0} ""bind {1} {2}; slam_updatecfg; echo Loaded: {3}""", Track.Hotkey, My.Settings.RelayKey, index + 1, Track.name)
                 End If
             Next
 
-            Dim CfgData As String
-            CfgData = "voice_enable 1; voice_modenable 1; voice_forcemicrecord 0; con_enable 1"
+            Dim cfgData As String
+            cfgData = "voice_enable 1; voice_modenable 1; voice_forcemicrecord 0; con_enable 1"
 
-            If Game.VoiceFadeOut Then
-                CfgData = CfgData + "; voice_fadeouttime 0.0"
+            If game.VoiceFadeOut Then
+                cfgData = cfgData + "; voice_fadeouttime 0.0"
             End If
 
-            slam_cfg.WriteLine(CfgData)
+            slamCfg.WriteLine(cfgData)
 
         End Using
 
         'slam_tracklist.cfg
-        Using slam_tracklist_cfg As StreamWriter = New StreamWriter(GameCfgFolder & "slam_tracklist.cfg")
-            slam_tracklist_cfg.WriteLine("echo ""You can select tracks either by typing a tag, or their track number.""")
-            slam_tracklist_cfg.WriteLine("echo ""--------------------Tracks--------------------""")
-            For Each Track In Game.tracks
-                Dim index As String = Game.tracks.IndexOf(Track)
+        Using slamTracklistCfg As StreamWriter = New StreamWriter(gameCfgFolder & "slam_tracklist.cfg")
+            slamTracklistCfg.WriteLine("echo ""You can select tracks either by typing a tag, or their track number.""")
+            slamTracklistCfg.WriteLine("echo ""--------------------Tracks--------------------""")
+            For Each Track In game.Tracks
+                Dim index As String = game.Tracks.IndexOf(Track)
                 If My.Settings.WriteTags Then
-                    slam_tracklist_cfg.WriteLine("echo ""{0}. {1} [{2}]""", index + 1, Track.name, "'" & String.Join("', '", Track.tags) & "'")
+                    slamTracklistCfg.WriteLine("echo ""{0}. {1} [{2}]""", index + 1, Track.name, "'" & String.Join("', '", Track.Tags) & "'")
                 Else
-                    slam_tracklist_cfg.WriteLine("echo ""{0}. {1}""", index + 1, Track.name)
+                    slamTracklistCfg.WriteLine("echo ""{0}. {1}""", index + 1, Track.name)
                 End If
             Next
-            slam_tracklist_cfg.WriteLine("echo ""----------------------------------------------""")
+            slamTracklistCfg.WriteLine("echo ""----------------------------------------------""")
         End Using
 
     End Sub
 
-    Private Function LoadTrack(ByVal Game As SourceGame, ByVal index As Integer, ByVal SteamappsPath As String) As Boolean
-        Dim Track As track
-        If Game.tracks.Count > index Then
-            Track = Game.tracks(index)
-            Dim voicefile As String = Path.Combine(SteamappsPath, Game.directory) & "voice_input.wav"
+    Private Function LoadTrack(ByVal game As SourceGame, ByVal index As Integer, ByVal steamappsPath As String) As Boolean
+        Dim track As Track
+        If game.Tracks.Count > index Then
+            track = game.Tracks(index)
+            Dim voicefile As String = Path.Combine(steamappsPath, game.Directory) & "voice_input.wav"
             Try
                 If File.Exists(voicefile) Then
                     File.Delete(voicefile)
                 End If
 
-                Dim trackfile As String = Game.libraryname & Track.name & Game.FileExtension
+                Dim trackfile As String = game.Libraryname & track.name & game.FileExtension
                 If File.Exists(trackfile) Then
 
-                    If Track.volume = 100 And Track.startpos = -1 And Track.endpos = -1 Then
+                    If track.Volume = 100 And track.Startpos = -1 And track.Endpos = -1 Then
                         File.Copy(trackfile, voicefile)
                     Else
 
-                        Dim WaveFloat As New WaveChannel32(New WaveFileReader(trackfile))
+                        Dim waveFloat As New WaveChannel32(New WaveFileReader(trackfile))
 
-                        If Not Track.volume = 100 Then
-                            WaveFloat.Volume = (Track.volume / 100) ^ 6
+                        If Not track.Volume = 100 Then
+                            waveFloat.Volume = (track.Volume / 100) ^ 6
                         End If
 
-                        If Not Track.startpos = Track.endpos And Track.endpos > 0 Then
-                            Dim bytes((Track.endpos - Track.startpos) * 4) As Byte
+                        If Not track.Startpos = track.Endpos And track.Endpos > 0 Then
+                            Dim bytes((track.Endpos - track.Startpos) * 4) As Byte
 
-                            WaveFloat.Position = Track.startpos * 4
-                            WaveFloat.Read(bytes, 0, (Track.endpos - Track.startpos) * 4)
+                            waveFloat.Position = track.Startpos * 4
+                            waveFloat.Read(bytes, 0, (track.Endpos - track.Startpos) * 4)
 
-                            WaveFloat = New WaveChannel32(New RawSourceWaveStream(New MemoryStream(bytes), WaveFloat.WaveFormat))
+                            waveFloat = New WaveChannel32(New RawSourceWaveStream(New MemoryStream(bytes), waveFloat.WaveFormat))
                         End If
 
-                        WaveFloat.PadWithZeroes = False
-                        Dim outFormat = New WaveFormat(Game.samplerate, Game.bits, Game.channels)
-                        Dim resampler = New MediaFoundationResampler(WaveFloat, outFormat)
+                        waveFloat.PadWithZeroes = False
+                        Dim outFormat = New WaveFormat(game.Samplerate, game.Bits, game.Channels)
+                        Dim resampler = New MediaFoundationResampler(waveFloat, outFormat)
                         resampler.ResamplerQuality = 60
                         WaveFileWriter.CreateWaveFile(voicefile, resampler)
 
                         resampler.Dispose()
-                        WaveFloat.Dispose()
+                        waveFloat.Dispose()
 
                     End If
 
-                    Dim GameCfgFolder As String = Path.Combine(SteamappsPath, Game.directory, Game.ToCfg)
-                    Using slam_curtrack As StreamWriter = New StreamWriter(GameCfgFolder & "slam_curtrack.cfg")
-                        slam_curtrack.WriteLine("echo ""[SLAM] Track name: {0}""", Track.name)
+                    Dim gameCfgFolder As String = Path.Combine(steamappsPath, game.Directory, game.ToCfg)
+                    Using slamCurtrack As StreamWriter = New StreamWriter(gameCfgFolder & "slam_curtrack.cfg")
+                        slamCurtrack.WriteLine("echo ""[SLAM] Track name: {0}""", track.name)
                     End Using
-                    Using slam_saycurtrack As StreamWriter = New StreamWriter(GameCfgFolder & "slam_saycurtrack.cfg")
-                        slam_saycurtrack.WriteLine("say ""[SLAM] Track name: {0}""", Track.name)
+                    Using slamSaycurtrack As StreamWriter = New StreamWriter(gameCfgFolder & "slam_saycurtrack.cfg")
+                        slamSaycurtrack.WriteLine("say ""[SLAM] Track name: {0}""", track.name)
                     End Using
-                    Using slam_sayteamcurtrack As StreamWriter = New StreamWriter(GameCfgFolder & "slam_sayteamcurtrack.cfg")
-                        slam_sayteamcurtrack.WriteLine("say_team ""[SLAM] Track name: {0}""", Track.name)
+                    Using slamSayteamcurtrack As StreamWriter = New StreamWriter(gameCfgFolder & "slam_sayteamcurtrack.cfg")
+                        slamSayteamcurtrack.WriteLine("say_team ""[SLAM] Track name: {0}""", track.name)
                     End Using
 
 
@@ -427,7 +428,7 @@ Public Class Form1
         Return True
     End Function
 
-    Private Function recog(ByVal str As String, ByVal reg As String) As String
+    Private Function Recog(ByVal str As String, ByVal reg As String) As String
         Dim keyd As Match = Regex.Match(str, reg)
         Return (keyd.Groups(1).ToString)
     End Function
@@ -435,29 +436,29 @@ Public Class Form1
     Private Sub PollRelayWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles PollRelayWorker.DoWork
         PollRelayWorker.ReportProgress(-1) 'Report that SLAM is searching.
 
-        Dim Game As SourceGame = e.Argument
-        Dim GameDir As String = Game.directory & Game.exename & ".exe"
+        Dim game As SourceGame = e.Argument
+        Dim gameDir As String = game.Directory & game.Exename & ".exe"
 
-        Dim SteamAppsPath As String = vbNullString
-        Dim UserDataPath As String = vbNullString
+        Dim steamAppsPath As String = vbNullString
+        Dim userDataPath As String = vbNullString
 
         Try
             Do While Not PollRelayWorker.CancellationPending
 
-                Dim GameProcess As String = GetFilepath(Game.exename)
-                If Not String.IsNullOrEmpty(GameProcess) AndAlso GameProcess.EndsWith(GameDir) Then
-                    SteamAppsPath = GameProcess.Remove(GameProcess.Length - GameDir.Length)
+                Dim gameProcess As String = GetFilepath(game.Exename)
+                If Not String.IsNullOrEmpty(gameProcess) AndAlso gameProcess.EndsWith(gameDir) Then
+                    steamAppsPath = gameProcess.Remove(gameProcess.Length - gameDir.Length)
                 End If
 
-                Dim SteamProcess As String = GetFilepath("Steam")
-                If Not String.IsNullOrEmpty(SteamProcess) Then
-                    UserDataPath = SteamProcess.Remove(SteamProcess.Length - "Steam.exe".Length) & "userdata\"
+                Dim steamProcess As String = GetFilepath("Steam")
+                If Not String.IsNullOrEmpty(steamProcess) Then
+                    userDataPath = steamProcess.Remove(steamProcess.Length - "Steam.exe".Length) & "userdata\"
                 End If
 
-                If System.IO.Directory.Exists(SteamAppsPath) Then
-                    If Not Game.id = 0 Then
+                If IO.Directory.Exists(steamAppsPath) Then
+                    If Not game.Id = 0 Then
 
-                        If System.IO.Directory.Exists(UserDataPath) Then
+                        If IO.Directory.Exists(userDataPath) Then
                             Exit Do
                         End If
 
@@ -466,11 +467,11 @@ Public Class Form1
                     End If
                 End If
 
-                Thread.Sleep(Game.PollInterval)
+                Thread.Sleep(game.PollInterval)
             Loop
 
-            If Not String.IsNullOrEmpty(SteamAppsPath) Then
-                CreateCfgFiles(Game, SteamAppsPath)
+            If Not String.IsNullOrEmpty(steamAppsPath) Then
+                CreateCfgFiles(game, steamAppsPath)
             End If
 
         Catch ex As Exception
@@ -484,32 +485,32 @@ Public Class Form1
 
         Do While Not PollRelayWorker.CancellationPending
             Try
-                Dim GameFolder As String = Path.Combine(SteamAppsPath, Game.directory)
-                Dim GameCfg As String = Path.Combine(GameFolder, Game.ToCfg) & "slam_relay.cfg"
+                Dim gameFolder As String = Path.Combine(steamAppsPath, game.Directory)
+                Dim gameCfg As String = Path.Combine(gameFolder, game.ToCfg) & "slam_relay.cfg"
 
-                If Not Game.id = 0 Then
-                    GameCfg = UserDataCFG(Game, UserDataPath)
+                If Not game.Id = 0 Then
+                    gameCfg = UserDataCfg(game, userDataPath)
                 End If
 
-                If File.Exists(GameCfg) Then
-                    Dim RelayCfg As String
-                    Using reader As StreamReader = New StreamReader(GameCfg)
-                        RelayCfg = reader.ReadToEnd
+                If File.Exists(gameCfg) Then
+                    Dim relayCfg As String
+                    Using reader As StreamReader = New StreamReader(gameCfg)
+                        relayCfg = reader.ReadToEnd
                     End Using
 
-                    Dim command As String = recog(RelayCfg, String.Format("bind ""{0}"" ""(.*?)""", My.Settings.RelayKey))
+                    Dim command As String = Recog(relayCfg, String.Format("bind ""{0}"" ""(.*?)""", My.Settings.RelayKey))
                     If Not String.IsNullOrEmpty(command) Then
                         'load audiofile
                         If IsNumeric(command) Then
-                            If LoadTrack(Game, Convert.ToInt32(command) - 1, SteamAppsPath) Then
+                            If LoadTrack(game, Convert.ToInt32(command) - 1, steamAppsPath) Then
                                 PollRelayWorker.ReportProgress(Convert.ToInt32(command) - 1)
                             End If
                         End If
-                        File.Delete(GameCfg)
+                        File.Delete(gameCfg)
                     End If
                 End If
 
-                Thread.Sleep(Game.PollInterval)
+                Thread.Sleep(game.PollInterval)
 
             Catch ex As Exception
                 If Not ex.HResult = -2147024864 Then '-2147024864 = "System.IO.IOException: The process cannot access the file because it is being used by another process."
@@ -520,34 +521,34 @@ Public Class Form1
             End Try
         Loop
 
-        If Not String.IsNullOrEmpty(SteamAppsPath) Then
-            DeleteCFGs(Game, SteamAppsPath)
+        If Not String.IsNullOrEmpty(steamAppsPath) Then
+            DeleteCfGs(game, steamAppsPath)
         End If
 
     End Sub
 
-    Public Function UserDataCFG(Game As SourceGame, UserdataPath As String) As String
-        If System.IO.Directory.Exists(UserdataPath) Then
-            For Each userdir As String In System.IO.Directory.GetDirectories(UserdataPath)
-                Dim CFGPath As String = Path.Combine(userdir, Game.id.ToString) & "\local\cfg\slam_relay.cfg"
-                If File.Exists(CFGPath) Then
-                    Return CFGPath
+    Public Function UserDataCfg(game As SourceGame, userdataPath As String) As String
+        If IO.Directory.Exists(userdataPath) Then
+            For Each userdir As String In IO.Directory.GetDirectories(userdataPath)
+                Dim cfgPath As String = Path.Combine(userdir, game.Id.ToString) & "\local\cfg\slam_relay.cfg"
+                If File.Exists(cfgPath) Then
+                    Return cfgPath
                 End If
             Next
         End If
         Return vbNullString
     End Function
 
-    Private Function GetFilepath(ProcessName As String) As String
+    Private Function GetFilepath(processName As String) As String
 
-        Dim wmiQueryString As String = "Select * from Win32_Process Where Name = """ & ProcessName & ".exe"""
+        Dim wmiQueryString As String = "Select * from Win32_Process Where Name = """ & processName & ".exe"""
 
         Using searcher = New ManagementObjectSearcher(wmiQueryString)
             Using results = searcher.Get()
 
-                Dim Process As ManagementObject = results.Cast(Of ManagementObject)().FirstOrDefault()
-                If Process IsNot Nothing Then
-                    Return Process("ExecutablePath").ToString
+                Dim process As ManagementObject = results.Cast(Of ManagementObject)().FirstOrDefault()
+                If process IsNot Nothing Then
+                    Return process("ExecutablePath").ToString
                 End If
 
             End Using
@@ -569,7 +570,7 @@ Public Class Form1
     End Sub
 
     Private Sub PollRelayWorker_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles PollRelayWorker.RunWorkerCompleted
-        If running Then
+        If _running Then
             StopPoll()
         End If
 
@@ -579,25 +580,25 @@ Public Class Form1
             MessageBox.Show(e.Result.Message & " See errorlog.txt for more info.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
-        If ClosePending Then
-            Me.Close()
+        If _closePending Then
+            Close()
         End If
     End Sub
 
-    Private Sub CreateTags(ByVal Game As SourceGame)
-        Dim NameWords As New Dictionary(Of String, Integer)
+    Private Sub CreateTags(ByVal game As SourceGame)
+        Dim nameWords As New Dictionary(Of String, Integer)
 
         Dim index As Integer
-        For Each Track In Game.tracks
-            Dim Words As List(Of String) = Track.name.Split({" "c, "."c, "-"c, "_"c}).ToList
+        For Each Track In game.Tracks
+            Dim words As List(Of String) = Track.name.Split({" "c, "."c, "-"c, "_"c}).ToList
 
-            For Each Word In Words
+            For Each Word In words
 
-                If Not IsNumeric(Word) And Not Game.blacklist.Contains(Word.ToLower) And Word.Length < 32 Then
-                    If NameWords.ContainsKey(Word) Then
-                        NameWords.Remove(Word)
+                If Not IsNumeric(Word) And Not game.Blacklist.Contains(Word.ToLower) And Word.Length < 32 Then
+                    If nameWords.ContainsKey(Word) Then
+                        nameWords.Remove(Word)
                     Else
-                        NameWords.Add(Word, index)
+                        nameWords.Add(Word, index)
                     End If
                 End If
 
@@ -605,19 +606,19 @@ Public Class Form1
             index += 1
         Next
 
-        For Each Tag As KeyValuePair(Of String, Integer) In NameWords
-            Game.tracks(Tag.Value).tags.Add(Tag.Key)
+        For Each Tag As KeyValuePair(Of String, Integer) In nameWords
+            game.Tracks(Tag.Value).Tags.Add(Tag.Key)
         Next
     End Sub
 
     Private Sub EnableInterface()
-        For Each Control In Me.Controls
+        For Each Control In Controls
             Control.Enabled = True
         Next
     End Sub
 
     Private Sub DisableInterface()
-        For Each Control In Me.Controls
+        For Each Control In Controls
             Control.Enabled = False
         Next
     End Sub
@@ -629,52 +630,52 @@ Public Class Form1
         TrackList.Items(track).SubItems(0).Text = "True"
     End Sub
 
-    Private Sub LoadTrackKeys(ByVal Game As SourceGame)
-        Dim SettingsList As New List(Of track)
-        Dim SettingsFile As String = Path.Combine(Game.libraryname, "TrackSettings.xml")
+    Private Sub LoadTrackKeys(ByVal game As SourceGame)
+        Dim settingsList As New List(Of Track)
+        Dim settingsFile As String = Path.Combine(game.Libraryname, "TrackSettings.xml")
 
-        If File.Exists(SettingsFile) Then
-            Dim XmlFile As String
-            Using reader As StreamReader = New StreamReader(SettingsFile)
-                XmlFile = reader.ReadToEnd
+        If File.Exists(settingsFile) Then
+            Dim xmlFile As String
+            Using reader As StreamReader = New StreamReader(settingsFile)
+                xmlFile = reader.ReadToEnd
             End Using
-            SettingsList = Deserialize(Of List(Of track))(XmlFile)
+            settingsList = Deserialize(Of List(Of Track))(xmlFile)
         End If
 
 
-        For Each Track In Game.tracks
-            For Each SetTrack In SettingsList
+        For Each Track In game.Tracks
+            For Each SetTrack In settingsList
                 If Track.name = SetTrack.name Then
                     'Please tell me that there is a better way to do the following...
-                    Track.hotkey = SetTrack.hotkey
-                    Track.volume = SetTrack.volume
-                    Track.startpos = SetTrack.startpos
-                    Track.endpos = SetTrack.endpos
+                    Track.Hotkey = SetTrack.Hotkey
+                    Track.Volume = SetTrack.Volume
+                    Track.Startpos = SetTrack.Startpos
+                    Track.Endpos = SetTrack.Endpos
                 End If
             Next
         Next
 
     End Sub
 
-    Private Sub SaveTrackKeys(ByVal Game As SourceGame)
-        Dim SettingsList As New List(Of track)
-        Dim SettingsFile As String = Path.Combine(Game.libraryname, "TrackSettings.xml")
+    Private Sub SaveTrackKeys(ByVal game As SourceGame)
+        Dim settingsList As New List(Of Track)
+        Dim settingsFile As String = Path.Combine(game.Libraryname, "TrackSettings.xml")
 
-        For Each Track In Game.tracks
-            If Not String.IsNullOrEmpty(Track.hotkey) Or Not Track.volume = 100 Or Track.endpos > 0 Then
+        For Each Track In game.Tracks
+            If Not String.IsNullOrEmpty(Track.Hotkey) Or Not Track.Volume = 100 Or Track.Endpos > 0 Then
 
-                SettingsList.Add(Track)
+                settingsList.Add(Track)
 
             End If
         Next
 
-        If SettingsList.Count > 0 Then
-            Using writer As StreamWriter = New StreamWriter(SettingsFile)
-                writer.Write(Serialize(SettingsList))
+        If settingsList.Count > 0 Then
+            Using writer As StreamWriter = New StreamWriter(settingsFile)
+                writer.Write(Serialize(settingsList))
             End Using
         Else
-            If File.Exists(SettingsFile) Then
-                File.Delete(SettingsFile)
+            If File.Exists(settingsFile) Then
+                File.Delete(settingsFile)
             End If
         End If
 
@@ -692,12 +693,12 @@ Public Class Form1
                 ContextRefresh.Visible = True
 
                 If TrackList.SelectedItems.Count > 1 Then
-                    If Not running Then 'visible when multiple selected AND is not running
+                    If Not _running Then 'visible when multiple selected AND is not running
                         ContextDelete.Visible = True
                     End If
 
                 Else
-                    If running Then
+                    If _running Then
                         TrimToolStripMenuItem.Visible = True 'visible when only one selected AND is running
                     Else
                         For Each Control In TrackContextMenu.Items 'visible when only one selected AND is not running (all)
@@ -724,22 +725,22 @@ Public Class Form1
     Private Sub ContextDelete_Click(sender As Object, e As EventArgs) Handles ContextDelete.Click
         Dim game As SourceGame = GetCurrentGame()
 
-        Dim SelectedNames As New List(Of String)
+        Dim selectedNames As New List(Of String)
         For Each item In TrackList.SelectedItems
-            SelectedNames.Add(item.SubItems(1).Text)
+            selectedNames.Add(item.SubItems(1).Text)
         Next
 
-        If MessageBox.Show(String.Format("Are you sure you want to delete {0}?", String.Join(", ", SelectedNames)), "Delete Track?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+        If MessageBox.Show(String.Format("Are you sure you want to delete {0}?", String.Join(", ", selectedNames)), "Delete Track?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
 
-            For Each item In SelectedNames
-                Dim FilePath As String = Path.Combine(game.libraryname, item & game.FileExtension)
+            For Each item In selectedNames
+                Dim filePath As String = Path.Combine(game.Libraryname, item & game.FileExtension)
 
-                If File.Exists(FilePath) Then
+                If File.Exists(filePath) Then
                     Try
-                        File.Delete(FilePath)
+                        File.Delete(filePath)
                     Catch ex As Exception
                         LogError(ex)
-                        MsgBox(String.Format("Failed to delete {0}.", FilePath))
+                        MsgBox(String.Format("Failed to delete {0}.", filePath))
                     End Try
                 End If
             Next
@@ -751,27 +752,27 @@ Public Class Form1
     End Sub
 
     Private Sub ContextHotKey_Click(sender As Object, e As EventArgs) Handles ContextHotKey.Click
-        Dim SelectKeyDialog As New SelectKey
-        Dim SelectedIndex = TrackList.SelectedItems(0).Index
-        If SelectKeyDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
-            Dim Game = GetCurrentGame()
+        Dim selectKeyDialog As New SelectKey
+        Dim selectedIndex = TrackList.SelectedItems(0).Index
+        If selectKeyDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
+            Dim game = GetCurrentGame()
 
 
 
-            Dim KeyIsFree As Boolean = True
-            For Each track In Game.tracks
-                If track.hotkey = SelectKeyDialog.ChosenKey Then 'Checking to see if any other track is already using this key
-                    KeyIsFree = False
+            Dim keyIsFree As Boolean = True
+            For Each track In game.Tracks
+                If track.Hotkey = selectKeyDialog.ChosenKey Then 'Checking to see if any other track is already using this key
+                    keyIsFree = False
                 End If
             Next
 
-            If KeyIsFree Then
-                Game.tracks(SelectedIndex).hotkey = SelectKeyDialog.ChosenKey
+            If keyIsFree Then
+                game.Tracks(selectedIndex).Hotkey = selectKeyDialog.ChosenKey
                 SaveTrackKeys(GetCurrentGame)
                 ReloadTracks(GetCurrentGame)
                 RefreshTrackList()
             Else
-                MessageBox.Show(String.Format("""{0}"" has already been assigned!", SelectKeyDialog.ChosenKey), "Invalid Key")
+                MessageBox.Show(String.Format("""{0}"" has already been assigned!", selectKeyDialog.ChosenKey), "Invalid Key")
             End If
 
 
@@ -780,8 +781,8 @@ Public Class Form1
 
     Private Sub RemoveHotkeyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveHotkeyToolStripMenuItem.Click
         For Each SelectedIndex In TrackList.SelectedItems
-            Dim Game = GetCurrentGame()
-            Game.tracks(SelectedIndex.index).hotkey = vbNullString
+            Dim game = GetCurrentGame()
+            game.Tracks(SelectedIndex.index).Hotkey = vbNullString
             SaveTrackKeys(GetCurrentGame)
             ReloadTracks(GetCurrentGame)
 
@@ -790,23 +791,23 @@ Public Class Form1
     End Sub
 
     Private Sub GoToToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GoToToolStripMenuItem.Click
-        Dim Games As SourceGame = GetCurrentGame()
-        Dim FilePath As String = Path.Combine(Games.libraryname, Games.tracks(TrackList.SelectedItems(0).Index).name & Games.FileExtension)
+        Dim games As SourceGame = GetCurrentGame()
+        Dim filePath As String = Path.Combine(games.Libraryname, games.Tracks(TrackList.SelectedItems(0).Index).name & games.FileExtension)
 
 
-        Dim Args As String = String.Format("/Select, ""{0}""", FilePath)
-        Dim pfi As New ProcessStartInfo("Explorer.exe", Args)
+        Dim args As String = String.Format("/Select, ""{0}""", filePath)
+        Dim pfi As New ProcessStartInfo("Explorer.exe", args)
 
-        System.Diagnostics.Process.Start(pfi)
+        Process.Start(pfi)
     End Sub
 
     Private Sub SetVolumeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SetVolumeToolStripMenuItem.Click
-        Dim SetVolumeDialog As New SetVolume
+        Dim setVolumeDialog As New SetVolume
 
-        If SetVolumeDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
+        If setVolumeDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
 
             For Each index In TrackList.SelectedIndices
-                GetCurrentGame.tracks(index).volume = SetVolumeDialog.Volume
+                GetCurrentGame.Tracks(index).Volume = setVolumeDialog.Volume
             Next
             SaveTrackKeys(GetCurrentGame)
             ReloadTracks(GetCurrentGame)
@@ -817,17 +818,17 @@ Public Class Form1
     End Sub
 
     Private Sub TrimToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TrimToolStripMenuItem.Click
-        Dim Game As SourceGame = GetCurrentGame()
-        Dim TrimDialog As New TrimForm
+        Dim game As SourceGame = GetCurrentGame()
+        Dim trimDialog As New TrimForm
 
-        TrimDialog.WavFile = Path.Combine(Game.libraryname, Game.tracks(TrackList.SelectedIndices(0)).name & Game.FileExtension)
-        TrimDialog.startpos = Game.tracks(TrackList.SelectedIndices(0)).startpos
-        TrimDialog.endpos = Game.tracks(TrackList.SelectedIndices(0)).endpos
+        trimDialog.WavFile = Path.Combine(game.Libraryname, game.Tracks(TrackList.SelectedIndices(0)).name & game.FileExtension)
+        trimDialog.Startpos = game.Tracks(TrackList.SelectedIndices(0)).Startpos
+        trimDialog.Endpos = game.Tracks(TrackList.SelectedIndices(0)).Endpos
 
 
-        If TrimDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
-            Game.tracks(TrackList.SelectedIndices(0)).startpos = TrimDialog.startpos
-            Game.tracks(TrackList.SelectedIndices(0)).endpos = TrimDialog.endpos
+        If trimDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
+            game.Tracks(TrackList.SelectedIndices(0)).Startpos = trimDialog.Startpos
+            game.Tracks(TrackList.SelectedIndices(0)).Endpos = trimDialog.Endpos
             SaveTrackKeys(GetCurrentGame)
             ReloadTracks(GetCurrentGame)
             RefreshTrackList()
@@ -835,17 +836,17 @@ Public Class Form1
     End Sub
 
     Private Sub RenameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RenameToolStripMenuItem.Click
-        Dim Game As SourceGame = GetCurrentGame()
-        Dim RenameDialog As New RenameForm
-        Dim SelectedTrack As SourceGame.track = GetCurrentGame.tracks(TrackList.SelectedIndices(0))
+        Dim game As SourceGame = GetCurrentGame()
+        Dim renameDialog As New RenameForm
+        Dim selectedTrack As Track = GetCurrentGame.Tracks(TrackList.SelectedIndices(0))
 
-        RenameDialog.filename = SelectedTrack.name
+        renameDialog.Filename = selectedTrack.name
 
-        If RenameDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
+        If renameDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
             Try
 
-                FileSystem.Rename(Game.libraryname & SelectedTrack.name & Game.FileExtension, Game.libraryname & RenameDialog.filename & Game.FileExtension)
-                GetCurrentGame.tracks(TrackList.SelectedIndices(0)).name = RenameDialog.filename
+                Rename(game.Libraryname & selectedTrack.name & game.FileExtension, game.Libraryname & renameDialog.Filename & game.FileExtension)
+                GetCurrentGame.Tracks(TrackList.SelectedIndices(0)).name = renameDialog.Filename
 
                 SaveTrackKeys(GetCurrentGame)
                 ReloadTracks(GetCurrentGame)
@@ -854,7 +855,7 @@ Public Class Form1
             Catch ex As Exception
                 Select Case ex.HResult
                     Case -2147024809
-                        MessageBox.Show("""" & RenameDialog.filename & """ contains invalid characters.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBox.Show("""" & renameDialog.Filename & """ contains invalid characters.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                     Case -2146232800
                         MessageBox.Show("A track with that name already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -895,9 +896,9 @@ Public Class Form1
     ''End Sub
 
     Private Sub PlayKeyButton_Click(sender As Object, e As EventArgs) Handles PlayKeyButton.Click
-        Dim SelectKeyDialog As New SelectKey
-        If SelectKeyDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
-            My.Settings.PlayKey = SelectKeyDialog.ChosenKey
+        Dim selectKeyDialog As New SelectKey
+        If selectKeyDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
+            My.Settings.PlayKey = selectKeyDialog.ChosenKey
             My.Settings.Save()
             RefreshPlayKey()
         End If
@@ -920,11 +921,11 @@ Public Class Form1
         SettingsForm.ShowDialog()
     End Sub
 
-    Private Sub DeleteCFGs(ByVal Game As SourceGame, ByVal SteamappsPath As String)
-        Dim GameDir As String = Path.Combine(SteamappsPath, Game.directory)
-        Dim GameCfgFolder As String = Path.Combine(GameDir, Game.ToCfg)
-        Dim SlamFiles() As String = {"slam.cfg", "slam_tracklist.cfg", "slam_relay.cfg", "slam_curtrack.cfg", "slam_saycurtrack.cfg", "slam_sayteamcurtrack.cfg"}
-        Dim voicefile As String = Path.Combine(SteamappsPath, Game.directory) & "voice_input.wav"
+    Private Sub DeleteCfGs(ByVal game As SourceGame, ByVal steamappsPath As String)
+        Dim gameDir As String = Path.Combine(steamappsPath, game.Directory)
+        Dim gameCfgFolder As String = Path.Combine(gameDir, game.ToCfg)
+        Dim slamFiles() As String = {"slam.cfg", "slam_tracklist.cfg", "slam_relay.cfg", "slam_curtrack.cfg", "slam_saycurtrack.cfg", "slam_sayteamcurtrack.cfg"}
+        Dim voicefile As String = Path.Combine(steamappsPath, game.Directory) & "voice_input.wav"
 
 
         Try
@@ -932,10 +933,10 @@ Public Class Form1
                 File.Delete(voicefile)
             End If
 
-            For Each FileName In SlamFiles
+            For Each FileName In slamFiles
 
-                If File.Exists(GameCfgFolder & FileName) Then
-                    File.Delete(GameCfgFolder & FileName)
+                If File.Exists(gameCfgFolder & FileName) Then
+                    File.Delete(gameCfgFolder & FileName)
                 End If
 
             Next
@@ -947,18 +948,19 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        If running Then
+        If _running Then
             StopPoll()
-            ClosePending = True
+            _closePending = True
             e.Cancel = True
         End If
     End Sub
 
     Private Sub StreamB_Click(sender As Object, e As EventArgs) Handles StreamB.Click
-        Dim Spotifyconfirm As Form2
-        Spotifyconfirm = New Form2()
-        Spotifyconfirm.Show()
-        Spotifyconfirm = Nothing
+        Dim spotifyconfirm As Form2
+        spotifyconfirm = New Form2()
+        spotifyconfirm.Show()
+        ' ReSharper disable once RedundantAssignment
+        spotifyconfirm = Nothing
 
 
 

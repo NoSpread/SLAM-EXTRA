@@ -5,8 +5,8 @@ Imports System.IO
 
 Public Class TrimForm
     Public WavFile As String
-    Public startpos As Integer
-    Public endpos As Integer
+    Public Startpos As Integer
+    Public Endpos As Integer
 
     Private Sub TrimForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If Not String.IsNullOrEmpty(WavFile) Then
@@ -112,9 +112,9 @@ Public Class TrimForm
     End Sub
 
     Private Sub BackgroundPlayer_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundPlayer.DoWork
-        Dim WaveFloat As WaveStream = e.Argument(0)
-        Dim LeftPos As Integer = e.Argument(1)
-        Dim RightPos As Integer = e.Argument(2)
+        Dim waveFloat As WaveStream = e.Argument(0)
+        Dim leftPos As Integer = e.Argument(1)
+        Dim rightPos As Integer = e.Argument(2)
 
         Dim bytes((RightPos - LeftPos)) As Byte
 

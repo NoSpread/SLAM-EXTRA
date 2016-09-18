@@ -36,7 +36,7 @@
     End Sub
 
     Private Sub ChangeRelayButton_Click(sender As Object, e As EventArgs) Handles ChangeRelayButton.Click
-        Dim SelectKeyDialog As New SelectKey
+        Dim selectKeyDialog As New SelectKey
         If SelectKeyDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
             My.Settings.RelayKey = SelectKeyDialog.ChosenKey
             My.Settings.Save()

@@ -14,11 +14,11 @@ Public Class AdvWaveViewer
     ''' <summary> 
     ''' Required designer variable.
     ''' </summary>
-    Private components As System.ComponentModel.Container = Nothing
-    Private m_waveStream As WaveStream
-    Private m_samplesPerPixel As Integer = 128
-    Private m_startPosition As Long
-    Private bytesPerSample As Integer = 2
+    Private _components As System.ComponentModel.Container = Nothing
+    Private _mWaveStream As WaveStream
+    Private _mSamplesPerPixel As Integer = 128
+    Private _mStartPosition As Long
+    Private _bytesPerSample As Integer = 2
     ''' <summary>
     ''' Creates a new WaveViewer control
     ''' </summary>
@@ -31,7 +31,7 @@ Public Class AdvWaveViewer
     End Sub
 
     Public Sub Fit()
-        If m_waveStream Is Nothing Then
+        If _mWaveStream Is Nothing Then
             Return
         End If
 
@@ -39,8 +39,8 @@ Public Class AdvWaveViewer
             Return
         End If
 
-        Dim samples As Integer = CInt(m_waveStream.Length / bytesPerSample)
-        m_startPosition = 0
+        Dim samples As Integer = CInt(_mWaveStream.Length / _bytesPerSample)
+        _mStartPosition = 0
         SamplesPerPixel = samples / Me.Width
 
     End Sub
@@ -50,15 +50,15 @@ Public Class AdvWaveViewer
         Fit()
     End Sub
 
-    Private mousePos As Point, startPos As Point
-    Private mouseDrag As Boolean = False
+    Private _mousePos As Point, _startPos As Point
+    Private _mouseDrag As Boolean = False
 
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         If e.Button = System.Windows.Forms.MouseButtons.Left And Me.Enabled Then
 
-            startPos = e.Location
-            mousePos = New Point(-1, -1)
-            mouseDrag = True
+            _startPos = e.Location
+            _mousePos = New Point(-1, -1)
+            _mouseDrag = True
             DrawVerticalLine(e.X)
 
         End If
@@ -68,12 +68,12 @@ Public Class AdvWaveViewer
 
     Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
         If e.X >= 0 And e.X <= Me.Width And Me.Enabled Then
-            If mouseDrag Then
+            If _mouseDrag Then
                 DrawVerticalLine(e.X)
-                If mousePos.X <> -1 Then
-                    DrawVerticalLine(mousePos.X)
+                If _mousePos.X <> -1 Then
+                    DrawVerticalLine(_mousePos.X)
                 End If
-                mousePos = e.Location
+                _mousePos = e.Location
             End If
         End If
         MyBase.OnMouseMove(e)
@@ -81,68 +81,68 @@ Public Class AdvWaveViewer
 
     Public ReadOnly Property MaxSamples As Integer
         Get
-            Return m_waveStream.Length / bytesPerSample
+            Return _mWaveStream.Length / _bytesPerSample
         End Get
     End Property
 
-    Private m_leftSample As Integer = -1
-    Public Property leftSample As Integer
+    Private _mLeftSample As Integer = -1
+    Public Property LeftSample As Integer
         Get
-            Return m_leftSample
+            Return _mLeftSample
         End Get
         Set(value As Integer)
-            m_leftSample = value
+            _mLeftSample = value
             Me.Invalidate()
         End Set
     End Property
-    Private m_rightSample As Integer = -1
-    Public Property rightSample As Integer
+    Private _mRightSample As Integer = -1
+    Public Property RightSample As Integer
         Get
-            Return m_rightSample
+            Return _mRightSample
         End Get
         Set(value As Integer)
-            m_rightSample = value
-            Me.Invalidate()
-        End Set
-    End Property
-
-    Public Property leftpos As Integer
-        Get
-            Return m_leftSample * bytesPerSample
-        End Get
-        Set(value As Integer)
-            m_leftSample = value / bytesPerSample
+            _mRightSample = value
             Me.Invalidate()
         End Set
     End Property
 
-    Public Property rightpos As Integer
+    Public Property Leftpos As Integer
         Get
-            Return m_rightSample * bytesPerSample
+            Return _mLeftSample * _bytesPerSample
         End Get
         Set(value As Integer)
-            m_rightSample = value / bytesPerSample
+            _mLeftSample = value / _bytesPerSample
+            Me.Invalidate()
+        End Set
+    End Property
+
+    Public Property Rightpos As Integer
+        Get
+            Return _mRightSample * _bytesPerSample
+        End Get
+        Set(value As Integer)
+            _mRightSample = value / _bytesPerSample
             Me.Invalidate()
         End Set
     End Property
 
     Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
-        If mouseDrag AndAlso e.Button = System.Windows.Forms.MouseButtons.Left AndAlso Me.Enabled Then
-            mouseDrag = False
+        If _mouseDrag AndAlso e.Button = System.Windows.Forms.MouseButtons.Left AndAlso Me.Enabled Then
+            _mouseDrag = False
             'DrawVerticalLine(startPos.X)
 
-            If mousePos.X = -1 Then
+            If _mousePos.X = -1 Then
 
-                If Not startPos.X = 0 Then
-                    DrawVerticalLine(startPos.X)
+                If Not _startPos.X = 0 Then
+                    DrawVerticalLine(_startPos.X)
                 End If
 
                 Return
             End If
             'DrawVerticalLine(mousePos.X)
 
-            m_leftSample = CInt(StartPosition \ bytesPerSample + m_samplesPerPixel * Math.Min(startPos.X, mousePos.X))
-            m_rightSample = CInt(StartPosition \ bytesPerSample + m_samplesPerPixel * Math.Max(startPos.X, mousePos.X))
+            _mLeftSample = CInt(StartPosition \ _bytesPerSample + _mSamplesPerPixel * Math.Min(_startPos.X, _mousePos.X))
+            _mRightSample = CInt(StartPosition \ _bytesPerSample + _mSamplesPerPixel * Math.Max(_startPos.X, _mousePos.X))
             Me.Invalidate()
         End If
 
@@ -158,12 +158,12 @@ Public Class AdvWaveViewer
     ''' </summary>
     Public Property WaveStream() As WaveStream
         Get
-            Return m_waveStream
+            Return _mWaveStream
         End Get
         Set(value As WaveStream)
-            m_waveStream = value
-            If m_waveStream IsNot Nothing Then
-                bytesPerSample = (m_waveStream.WaveFormat.BitsPerSample / 8) * m_waveStream.WaveFormat.Channels
+            _mWaveStream = value
+            If _mWaveStream IsNot Nothing Then
+                _bytesPerSample = (_mWaveStream.WaveFormat.BitsPerSample / 8) * _mWaveStream.WaveFormat.Channels
                 Fit()
             End If
             Me.Invalidate()
@@ -172,7 +172,7 @@ Public Class AdvWaveViewer
 
     Public ReadOnly Property SampleRate As Integer
         Get
-            Return m_waveStream.WaveFormat.SampleRate
+            Return _mWaveStream.WaveFormat.SampleRate
         End Get
     End Property
 
@@ -181,10 +181,10 @@ Public Class AdvWaveViewer
     ''' </summary>
     Public Property SamplesPerPixel() As Integer
         Get
-            Return m_samplesPerPixel
+            Return _mSamplesPerPixel
         End Get
         Set(value As Integer)
-            m_samplesPerPixel = value
+            _mSamplesPerPixel = value
             Me.Invalidate()
         End Set
     End Property
@@ -194,21 +194,21 @@ Public Class AdvWaveViewer
     ''' </summary>
     Public Property StartPosition() As Long
         Get
-            Return m_startPosition
+            Return _mStartPosition
         End Get
         Set(value As Long)
-            m_startPosition = value
+            _mStartPosition = value
         End Set
     End Property
 
-    Private m_marker As Integer
-    Public Property marker() As Long
+    Private _mMarker As Integer
+    Public Property Marker() As Long
         Get
-            Return m_marker
+            Return _mMarker
         End Get
         Set(value As Long)
             If value <= MaxSamples Then
-                m_marker = value
+                _mMarker = value
                 Me.Invalidate()
             End If
         End Set
@@ -219,8 +219,8 @@ Public Class AdvWaveViewer
     ''' </summary>
     Protected Overrides Sub Dispose(disposing As Boolean)
         If disposing Then
-            If components IsNot Nothing Then
-                components.Dispose()
+            If _components IsNot Nothing Then
+                _components.Dispose()
             End If
         End If
         MyBase.Dispose(disposing)
@@ -230,20 +230,20 @@ Public Class AdvWaveViewer
     ''' <see cref="Control.OnPaint"/>
     ''' </summary>
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
-        If m_waveStream IsNot Nothing Then
-            m_waveStream.Position = 0
+        If _mWaveStream IsNot Nothing Then
+            _mWaveStream.Position = 0
             Dim bytesRead As Integer
-            Dim waveData As Byte() = New Byte(m_samplesPerPixel * bytesPerSample - 1) {}
-            m_waveStream.Position = m_startPosition + (e.ClipRectangle.Left * bytesPerSample * m_samplesPerPixel)
+            Dim waveData As Byte() = New Byte(_mSamplesPerPixel * _bytesPerSample - 1) {}
+            _mWaveStream.Position = _mStartPosition + (e.ClipRectangle.Left * _bytesPerSample * _mSamplesPerPixel)
 
-            Dim leftpos As Integer = CInt(m_leftSample \ m_samplesPerPixel - StartPosition \ bytesPerSample \ m_samplesPerPixel)
-            Dim rightpos As Integer = CInt(m_rightSample \ m_samplesPerPixel - StartPosition \ bytesPerSample \ m_samplesPerPixel)
-            Dim markerpos As Integer = CInt((m_marker + m_leftSample) \ m_samplesPerPixel - StartPosition \ bytesPerSample \ m_samplesPerPixel)
+            Dim leftpos As Integer = CInt(_mLeftSample \ _mSamplesPerPixel - StartPosition \ _bytesPerSample \ _mSamplesPerPixel)
+            Dim rightpos As Integer = CInt(_mRightSample \ _mSamplesPerPixel - StartPosition \ _bytesPerSample \ _mSamplesPerPixel)
+            Dim markerpos As Integer = CInt((_mMarker + _mLeftSample) \ _mSamplesPerPixel - StartPosition \ _bytesPerSample \ _mSamplesPerPixel)
 
             For x As Single = e.ClipRectangle.X To e.ClipRectangle.Right - 1
                 Dim low As Short = 0
                 Dim high As Short = 0
-                bytesRead = m_waveStream.Read(waveData, 0, m_samplesPerPixel * bytesPerSample)
+                bytesRead = _mWaveStream.Read(waveData, 0, _mSamplesPerPixel * _bytesPerSample)
                 If bytesRead = 0 Then
                     Exit For
                 End If
@@ -258,12 +258,12 @@ Public Class AdvWaveViewer
                 Next
                 Dim lowPercent As Single = ((CSng(low) - Short.MinValue) / UShort.MaxValue)
                 Dim highPercent As Single = ((CSng(high) - Short.MinValue) / UShort.MaxValue)
-                Using DodgerBluePen As New Pen(Color.DodgerBlue), BluePen As New Pen(Color.Blue), RedPen As New Pen(Color.Red), GreenPen As New Pen(Color.Green)
+                Using dodgerBluePen As New Pen(Color.DodgerBlue), bluePen As New Pen(Color.Blue), redPen As New Pen(Color.Red), greenPen As New Pen(Color.Green)
 
                     If x = leftpos And Not leftSample = rightSample Or x = rightpos And Not rightSample = leftSample Then
                         e.Graphics.DrawLine(RedPen, x, 0, x, Me.Height)
 
-                    ElseIf x = markerpos And m_marker > 0 Then
+                    ElseIf x = markerpos And _mMarker > 0 Then
                         e.Graphics.DrawLine(GreenPen, x, 0, x, Me.Height)
 
                     ElseIf x > leftpos And x < rightpos Then
@@ -288,7 +288,7 @@ Public Class AdvWaveViewer
     ''' the contents of this method with the code editor.
     ''' </summary>
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container()
+        _components = New System.ComponentModel.Container()
     End Sub
 #End Region
 End Class
